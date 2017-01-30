@@ -120,6 +120,7 @@
     <Content Include="Admin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="login.aspx" />
+    <Content Include="Teacher.aspx" />
     <Content Include="testConnection.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -147,6 +148,13 @@
     <Compile Include="Parent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="Teacher.aspx.cs">
+      <DependentUpon>Teacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Teacher.aspx.designer.cs">
+      <DependentUpon>Teacher.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Teacher.cs" />
     <Compile Include="testConnection.aspx.cs">
       <DependentUpon>testConnection.aspx</DependentUpon>
