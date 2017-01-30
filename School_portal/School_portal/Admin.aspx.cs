@@ -15,24 +15,24 @@ namespace School_portal
         string role_text;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["school_portal"].ConnectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
+            ConnOpen admLoad = new ConnOpen();
+            //connection.Open();
+            admLoad.connection.Open();
             int id = Convert.ToInt32(Session["Value"]);
             Label1.Text = id.ToString();
-            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", connection);
+            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", admLoad.connection);
             SqlDataReader dr = sqlCom.ExecuteReader();
             string FIO;
             dr.Read();
             FIO = dr["familija"].ToString() + " " + dr["imja"].ToString() + " " + dr["otchestvo"].ToString();
             Label1.Text = "Здравствуйте " + FIO;
-            connection.Close();
+            admLoad.connection.Close();
 
             //------------------------------------------------------
 
-            connection.Open();
+            admLoad.connection.Open();
             string result = "";
-            SqlCommand command = new SqlCommand("SELECT * FROM dbo.users", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM dbo.users", admLoad.connection);
             SqlDataReader reader = command.ExecuteReader();
             result += "<table> <tr><td>id пользователя</td><td>роль</td> <td>фамилия</td><td>имя</td><td>отчество</td><td>адрес</td><td>login</td><td>Дата рождения</td> </tr>";
             while (reader.Read())
@@ -67,6 +67,7 @@ namespace School_portal
             result += "</ table >";
             Label2.Text += result;
             reader.Close();
+            admLoad.connection.Close();
         }
 
         protected void Button1_Click(object sender, EventArgs e)

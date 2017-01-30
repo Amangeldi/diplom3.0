@@ -47,11 +47,9 @@ namespace School_portal
             }
             string login = TextBox1.Text;
             string password = TextBox2.Text;
-            string connectionString =
-           WebConfigurationManager.ConnectionStrings["school_portal"].ConnectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE role LIKE '%" + role + "' and login LIKE '%" + login + "'and password LIKE '%" + password + "'", connection);
+            ConnOpen loginConnection = new ConnOpen();
+            loginConnection.connection.Open();
+            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE role LIKE '%" + role + "' and login LIKE '%" + login + "'and password LIKE '%" + password + "'", loginConnection.connection);
             SqlDataReader dr = sqlCom.ExecuteReader();
 
             int id;
@@ -68,7 +66,7 @@ namespace School_portal
             {
                 Label3.Text = "Не войдете!";
             }
-            connection.Close();
+            loginConnection.connection.Close();
         }
     }
 }
