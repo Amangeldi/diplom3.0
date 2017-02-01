@@ -13,21 +13,24 @@ namespace School_portal
     {
         string role;
         string role_text;
+        string FIO = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConnOpen admLoad = new ConnOpen();
-            //connection.Open();
-            admLoad.connection.Open();
-            int id = Convert.ToInt32(Session["Value"]);
-            Label1.Text = id.ToString();
-            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", admLoad.connection);
-            SqlDataReader dr = sqlCom.ExecuteReader();
-            string FIO;
-            dr.Read();
-            FIO = dr["familija"].ToString() + " " + dr["imja"].ToString() + " " + dr["otchestvo"].ToString();
-            Label1.Text = "Здравствуйте " + FIO;
-            admLoad.connection.Close();
 
+            ConnOpen admLoad = new ConnOpen();
+            if (FIO == null)
+            {
+                //connection.Open();
+                admLoad.connection.Open();
+                int id = Convert.ToInt32(Session["Value"]);
+                Label1.Text = id.ToString();
+                SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", admLoad.connection);
+                SqlDataReader dr = sqlCom.ExecuteReader();
+                dr.Read();
+                FIO = dr["familija"].ToString() + " " + dr["imja"].ToString() + " " + dr["otchestvo"].ToString();
+                Label1.Text = "Здравствуйте " + FIO;
+                admLoad.connection.Close();
+            }
             //------------------------------------------------------
 
             admLoad.connection.Open();
@@ -72,7 +75,17 @@ namespace School_portal
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            Users user = new Users();
+            bool test = user.test_login(TextBox5.Text);
+            if(test == false)
+            {
+                Label12.Text = "Введите другой логин";
+            }
+            else
+            {
+                Label12.Text = "OK";
+                user.add(Convert.ToInt32(DropDownList1.SelectedValue), TextBox1.Text, TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text, TextBox6.Text, TextBox7.Text);
+            }
         }
 
         protected void Button2_Click(object sender, EventArgs e)
