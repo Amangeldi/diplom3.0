@@ -16,5 +16,12 @@ namespace School_portal
         public string login { get; set; }
         public string password { get; set; }
         public string DOB { get; set; }
+
+        public ConnOpen Add_user = new ConnOpen();
+        Admin1 admin = new Admin1();
+        public void add ()
+        {
+            Add_user.connection.Open();
+        }
     }
 }
