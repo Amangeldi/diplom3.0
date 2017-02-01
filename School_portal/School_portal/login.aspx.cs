@@ -54,10 +54,9 @@ namespace School_portal
 
             int id;
             dr.Read();
-            id = Convert.ToInt32(dr["user_id"]);
-            Label3.Text = id.ToString();
             if (dr.HasRows == true)
             {
+                id = Convert.ToInt32(dr["user_id"]);
                 //устанавливаем сессию  
                 Session["Value"] = id;
                 Server.Transfer(url + ".aspx", true);
