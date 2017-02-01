@@ -65,7 +65,7 @@ namespace School_portal
                 result += "</tr>";
             }
             result += "</ table >";
-            Label2.Text += result;
+            Label2.Text = "Список пользователей:" + result;
             reader.Close();
             admLoad.connection.Close();
         }
