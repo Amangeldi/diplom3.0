@@ -20,6 +20,7 @@ namespace School_portal
 
         public ConnOpen add_user = new ConnOpen();
         public ConnOpen test_user = new ConnOpen();
+        public ConnOpen for_id = new ConnOpen();
         public bool test_login(string _login)
         {
             login = _login;
@@ -50,19 +51,46 @@ namespace School_portal
             add_user.connection.Open();
             string sql = string.Format("Insert Into users" +
                        "(role, familija, imja, otchestvo, adress, login, password, DOB) Values(@role, @familija, @imja, @otchestvo, @adress, @login, @password, @DOB)");
-            using (SqlCommand cmd_10 = new SqlCommand(sql, add_user.connection))
+            using (SqlCommand cmd = new SqlCommand(sql, add_user.connection))
             {
-                cmd_10.Parameters.AddWithValue("@role", role);
-                cmd_10.Parameters.AddWithValue("@familija", familija);
-                cmd_10.Parameters.AddWithValue("@imja", imja);
-                cmd_10.Parameters.AddWithValue("@otchestvo", otchestvo);
-                cmd_10.Parameters.AddWithValue("@adress", adress);
-                cmd_10.Parameters.AddWithValue("@login", login);
-                cmd_10.Parameters.AddWithValue("@password", password);
-                cmd_10.Parameters.AddWithValue("@DOB", DOB);
-                cmd_10.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@role", role);
+                cmd.Parameters.AddWithValue("@familija", familija);
+                cmd.Parameters.AddWithValue("@imja", imja);
+                cmd.Parameters.AddWithValue("@otchestvo", otchestvo);
+                cmd.Parameters.AddWithValue("@adress", adress);
+                cmd.Parameters.AddWithValue("@login", login);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@DOB", DOB);
+                cmd.ExecuteNonQuery();
             }
             add_user.connection.Close();
+
+            for_id.connection.Open();
+            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE login LIKE '%" + login + "'", for_id.connection);
+            SqlDataReader dr = sqlCom.ExecuteReader();
+            dr.Read();
+            if (role == 1)
+            {
+                Admin nAdmin = new Admin(Convert.ToInt32(dr["user_id"]));
+                nAdmin.add(Convert.ToInt32(dr["user_id"]));
+            }
+            else if(role == 2)
+            {
+                Teacher nTeacher = new Teacher(Convert.ToInt32(dr["user_id"]));
+                nTeacher.add(Convert.ToInt32(dr["user_id"]));
+            }
+            else if(role == 3)
+            {
+                Student nStudent = new Student(Convert.ToInt32(dr["user_id"]));
+                nStudent.add(Convert.ToInt32(dr["user_id"]));
+            }
+            else if(role == 4)
+            {
+                Parent nParent = new Parent(Convert.ToInt32(dr["user_id"]));
+                nParent.add(Convert.ToInt32(dr["user_id"]));
+            }
+
+            for_id.connection.Close();
         }
     }
 }
