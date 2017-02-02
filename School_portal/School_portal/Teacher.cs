@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,21 @@ namespace School_portal
         public Teacher(int user_id)
         {
             this.user_id = user_id;
+        }
+        public ConnOpen add_teacher = new ConnOpen();
+        public void add(int user_id)
+        {
+            //this.user_id = user_id;
+            add_teacher.connection.Open();
+            string sql = string.Format("Insert Into teacher" +
+                       "(user_id, position) Values(@user_id, @position)");
+            using (SqlCommand cmd = new SqlCommand(sql, add_teacher.connection))
+            {
+                cmd.Parameters.AddWithValue("@user_id", user_id);
+                cmd.Parameters.AddWithValue("@position", "Преподаватель математики");
+                cmd.ExecuteNonQuery();
+            }
+            add_teacher.connection.Close();
         }
     }
 }
