@@ -18,7 +18,7 @@ namespace School_portal
         {
 
             ConnOpen admLoad = new ConnOpen();
-            if (FIO == null)
+            if (FIO == null || Session["Value"] == null)
             {
                 //connection.Open();
                 admLoad.connection.Open();
