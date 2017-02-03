@@ -10,5 +10,6 @@ namespace School_portal
         public int groupp_id { get; set; }
         public string groupp_name { get; set; }
         public int teacher_id { get; set; }
+        public int groupp_kurs { get; set; }
     }
 }
