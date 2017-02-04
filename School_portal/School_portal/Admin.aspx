@@ -38,6 +38,7 @@
         <asp:Label ID="Label11" runat="server" Text=" Дата рождения: "></asp:Label>
         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Добавить" />
+        <asp:Label ID="Label15" runat="server" Text="Label"></asp:Label>
         <br />
         <asp:Label ID="Label12" runat="server" Text="Имя класса "></asp:Label>
         <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
