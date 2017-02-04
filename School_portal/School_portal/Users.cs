@@ -24,18 +24,20 @@ namespace School_portal
         public bool test_login(string _login)
         {
             login = _login;
+            bool tlog;
             test_user.connection.Open();
             SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE login LIKE '%" + login + "'", test_user.connection);
             SqlDataReader dr = sqlCom.ExecuteReader();
-            if(dr.HasRows == true)
+            if (dr.HasRows == true)
             {
-                return false;
+                tlog = false;
             }
             else
             {
-                return true;
+                tlog = true;
             }
             test_user.connection.Close();
+            return tlog;
         }
 
         public void add (int _role, string _familija, string _imja, string _otchestvo, string _adress, string _login, string _password, string _DOB)
