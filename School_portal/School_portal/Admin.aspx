@@ -38,9 +38,28 @@
         <asp:Label ID="Label11" runat="server" Text=" Дата рождения: "></asp:Label>
         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Добавить" />
-        <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label15" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Label ID="Label12" runat="server" Text="Имя класса "></asp:Label>
         <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить группу" />
+        <asp:Label ID="Label13" runat="server" Text="Курс класса "></asp:Label>
+        <asp:DropDownList ID="DropDownList2" runat="server">
+            <asp:ListItem>1</asp:ListItem>
+            <asp:ListItem>2</asp:ListItem>
+            <asp:ListItem>3</asp:ListItem>
+            <asp:ListItem>4</asp:ListItem>
+            <asp:ListItem>5</asp:ListItem>
+            <asp:ListItem>6</asp:ListItem>
+            <asp:ListItem>7</asp:ListItem>
+            <asp:ListItem>8</asp:ListItem>
+            <asp:ListItem>9</asp:ListItem>
+            <asp:ListItem>10</asp:ListItem>
+            <asp:ListItem>11</asp:ListItem>
+        </asp:DropDownList>
+        <asp:Label ID="Label14" runat="server" Text="Классный руководитель "></asp:Label>
+        <asp:DropDownList ID="DropDownList3" runat="server">
+        </asp:DropDownList>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить класс" />
     
     </div>
     </form>

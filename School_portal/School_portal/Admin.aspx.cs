@@ -18,6 +18,7 @@ namespace School_portal
         {
 
             ConnOpen admLoad = new ConnOpen();
+            ConnOpen admLoadUse = new ConnOpen();
             if (FIO == null || Session["Value"] == null)
             {
                 //connection.Open();
@@ -30,6 +31,37 @@ namespace School_portal
                 FIO = dr["familija"].ToString() + " " + dr["imja"].ToString() + " " + dr["otchestvo"].ToString();
                 Label1.Text = "Здравствуйте " + FIO;
                 admLoad.connection.Close();
+                //----------
+                //Тут нужно все расписать подробно, я сейчас уже не понимаю что происходит, а завтра точно не вспомню
+                admLoad.connection.Open();
+                admLoadUse.connection.Open();
+                //Добавил 2 коннекта, просто я раньше запретил несколько команд в одном коннекте
+                SqlCommand command_teach = new SqlCommand("SELECT * FROM dbo.teacher", admLoad.connection);
+                SqlDataReader reader_teach = command_teach.ExecuteReader();
+                //Создал команду для таблицы dbo.teacher
+                SqlCommand command_use;
+                SqlDataReader reader_use;
+                //Создал команду для таблицы dbo.users
+                string F = "", I = "", O = "";
+                while (reader_teach.Read())//По циклу читаем таблицу dbo.teacher до конца таблицы
+                {
+                    command_use = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + reader_teach["user_id"].ToString() + "'", admLoadUse.connection);
+                    reader_use = command_use.ExecuteReader();
+                    //С таблицы dbo.users достаем строки где user_id равно user_id из таблицы dbo.teacher
+                    reader_use.Read();
+                    //Читаем таблицу dbo.users
+                    F = reader_use["familija"].ToString()+" ";
+                    I = reader_use["imja"].ToString() + " ";
+                    O = reader_use["otchestvo"].ToString() + " ";
+                    DropDownList3.Items.Add(new ListItem(F+I+O, reader_teach["user_id"].ToString()));
+                    //Добавляем в DropDownList3 ФИО из таблицы dbo.users
+                    reader_use.Close();
+                    //Обязательно закрываем reader_use, ну его нахрен
+                }
+                admLoad.connection.Close();
+                admLoadUse.connection.Close();
+                //Закрываем коннекты и стараемся сюда не возвращаться
+                FIO = "1";
             }
             //------------------------------------------------------
 
@@ -71,6 +103,7 @@ namespace School_portal
             Label2.Text = "Список пользователей:" + result;
             reader.Close();
             admLoad.connection.Close();
+            
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -79,18 +112,28 @@ namespace School_portal
             bool test = user.test_login(TextBox5.Text);
             if(test == false)
             {
-                Label12.Text = "Введите другой логин";
+                Label15.Text = "Введите другой логин";
             }
             else
             {
-                Label12.Text = "OK";
+                Label15.Text = "OK";
                 user.add(Convert.ToInt32(DropDownList1.SelectedValue), TextBox1.Text, TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text, TextBox6.Text, TextBox7.Text);
             }
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            Groupp groupp = new Groupp();
+            bool test = groupp.test_groupp_name(TextBox8.Text, Convert.ToInt32(DropDownList2.SelectedValue));
+            if (test == false)
+            {
+                Label15.Text = "Введите другое имя класса";
+            }
+            else
+            {
+                Label15.Text = "OK";
+                groupp.add(TextBox8.Text,Convert.ToInt32(DropDownList3.SelectedValue), Convert.ToInt32(DropDownList2.SelectedValue));
+            }
         }
     }
 }
