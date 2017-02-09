@@ -61,6 +61,12 @@
         </asp:DropDownList>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить класс" />
     
+        <br />
+        <asp:TextBox ID="TextBox9" runat="server" OnTextChanged="TextBox9_TextChanged" AutoPostBack="true" ></asp:TextBox>
+        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Удалить пользователя" />
+        <asp:TextBox ID="TextBox10" runat="server" OnTextChanged="TextBox10_TextChanged"></asp:TextBox>
+        <asp:Button ID="Button4" runat="server" Text="Удалить класс" />
+    
     </div>
     </form>
 </body>
