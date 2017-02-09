@@ -66,7 +66,7 @@ namespace School_portal
         public void update_Tid(int teacher_id)
         {
             update_groupp.connection.Open();
-            string sql = string.Format("Update groupp Set teacher_id = NULL Where teacher_id = '"+ teacher_id.ToString()+"'" );
+            string sql = string.Format("Update groupp Set teacher_id = NULL Where teacher_id = "+ teacher_id.ToString()+";");
             using (SqlCommand cmd = new SqlCommand(sql, update_groupp.connection))
             {
                 cmd.ExecuteNonQuery();
