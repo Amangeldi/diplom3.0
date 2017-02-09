@@ -15,7 +15,12 @@ namespace School_portal
         {
             this.user_id = user_id;
         }
+        public Parent()
+        {
+
+        }
         public ConnOpen add_parent = new ConnOpen();
+        public ConnOpen delete_parent = new ConnOpen();
         public void add(int user_id)
         {
             //this.user_id = user_id;
@@ -30,6 +35,26 @@ namespace School_portal
                 cmd.ExecuteNonQuery();
             }
             add_parent.connection.Close();
+        }
+        public new void delete(int student_ticket_number)
+        {
+            delete_parent.connection.Open();
+            string sql = string.Format("Delete from parent where student_ticket_number = '{0}'", student_ticket_number);
+            using (SqlCommand cmd = new SqlCommand(sql, delete_parent.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            delete_parent.connection.Close();
+        }
+        public void delete_Uid(int user_id)
+        {
+            delete_parent.connection.Open();
+            string sql = string.Format("Delete from parent where user_id = '{0}'", user_id);
+            using (SqlCommand cmd = new SqlCommand(sql, delete_parent.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            delete_parent.connection.Close();
         }
     }
 }

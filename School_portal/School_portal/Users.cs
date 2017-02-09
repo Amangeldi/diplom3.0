@@ -21,6 +21,8 @@ namespace School_portal
         public ConnOpen add_user = new ConnOpen();
         public ConnOpen test_user = new ConnOpen();
         public ConnOpen for_id = new ConnOpen();
+        public ConnOpen delete_user = new ConnOpen();
+        public ConnOpen for_role = new ConnOpen();
         public bool test_login(string _login)
         {
             login = _login;
@@ -93,6 +95,62 @@ namespace School_portal
             }
 
             for_id.connection.Close();
+        }
+
+        public void delete(int _user_id)
+        {
+            this.user_id = _user_id;
+            for_role.connection.Open();
+            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + user_id + "'", for_role.connection);
+            SqlDataReader dr = sqlCom.ExecuteReader();
+            dr.Read();
+            role =Convert.ToInt32(dr["role"]);
+            if (role == 1)
+            {
+                Admin nAdmin = new Admin(Convert.ToInt32(dr["user_id"]));
+                nAdmin.delete(user_id);
+            }
+            else if (role == 2)
+            {
+                Teacher nTeacher = new Teacher(Convert.ToInt32(dr["user_id"]));
+                nTeacher.delete(user_id);
+            }
+            else if (role == 3)
+            {
+                Student nStudent = new Student(Convert.ToInt32(dr["user_id"]));
+                nStudent.delete(user_id);
+            }
+            else if (role == 4)
+            {
+                Parent nParent = new Parent(Convert.ToInt32(dr["user_id"]));
+                nParent.delete_Uid(user_id);
+            }
+            for_role.connection.Close();
+            //----------
+            delete_user.connection.Open();
+            string sql = string.Format("Delete from users where user_id = '{0}'", user_id);
+            using (SqlCommand cmd = new SqlCommand(sql, delete_user.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            delete_user.connection.Close();
+        }
+        public bool test_id (string _user_id)
+        {
+            test_user.connection.Open();
+            bool test;
+            SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + _user_id + "'", test_user.connection);
+            SqlDataReader dr = sqlCom.ExecuteReader();
+            if (dr.HasRows == true)
+            {
+                test = false;
+            }
+            else
+            {
+                test = true;
+            }
+            test_user.connection.Close();
+            return test;
         }
     }
 }

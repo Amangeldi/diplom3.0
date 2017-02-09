@@ -14,6 +14,8 @@ namespace School_portal
         public int groupp_kurs { get; set; }
         public ConnOpen add_groupp = new ConnOpen();
         public ConnOpen test_groupp = new ConnOpen();
+        public ConnOpen delete_groupp = new ConnOpen();
+        public ConnOpen update_groupp = new ConnOpen();
         public bool test_groupp_name( string _groupp_name, int _groupp_kurs)
         {
             groupp_name = _groupp_name;
@@ -50,6 +52,26 @@ namespace School_portal
             }
             add_groupp.connection.Close();
 
+        }
+        public void delete(int groupp_id)
+        {
+            delete_groupp.connection.Open();
+            string sql = string.Format("Delete from groupp where groupp_id = '{0}'", groupp_id);
+            using (SqlCommand cmd = new SqlCommand(sql, delete_groupp.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            delete_groupp.connection.Close();
+        }
+        public void update_Tid(int teacher_id)
+        {
+            update_groupp.connection.Open();
+            string sql = string.Format("Update groupp Set teacher_id = NULL Where teacher_id = "+ teacher_id.ToString()+";");
+            using (SqlCommand cmd = new SqlCommand(sql, update_groupp.connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            update_groupp.connection.Close();
         }
     }
 }

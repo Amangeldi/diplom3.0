@@ -53,7 +53,7 @@ namespace School_portal
                     F = reader_use["familija"].ToString()+" ";
                     I = reader_use["imja"].ToString() + " ";
                     O = reader_use["otchestvo"].ToString() + " ";
-                    DropDownList3.Items.Add(new ListItem(F+I+O, reader_teach["user_id"].ToString()));
+                    DropDownList3.Items.Add(new ListItem(F+I+O, reader_teach["teacher_id"].ToString()));
                     //Добавляем в DropDownList3 ФИО из таблицы dbo.users
                     reader_use.Close();
                     //Обязательно закрываем reader_use, ну его нахрен
@@ -134,6 +134,33 @@ namespace School_portal
                 Label15.Text = "OK";
                 groupp.add(TextBox8.Text,Convert.ToInt32(DropDownList3.SelectedValue), Convert.ToInt32(DropDownList2.SelectedValue));
             }
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Users user = new Users();
+            bool test = user.test_id(TextBox9.Text);
+            if (test == true)
+            {
+                Label15.Text = "Пользователь с таким id не существует или был удален";
+            }
+            else
+            {
+                user.delete(Convert.ToInt32(TextBox9.Text));
+                Label15.Text = "OK";
+            }
+        }
+
+        protected void TextBox10_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TextBox9_TextChanged(object sender, EventArgs e)
+        {
+            
+            //Button3.ForeColor = System.Drawing.Color.FromName("red");
+
         }
     }
 }
