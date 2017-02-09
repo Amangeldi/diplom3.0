@@ -108,22 +108,22 @@ namespace School_portal
             if (role == 1)
             {
                 Admin nAdmin = new Admin(Convert.ToInt32(dr["user_id"]));
-                nAdmin.delete(Convert.ToInt32(dr["user_id"]));
+                nAdmin.delete(user_id);
             }
             else if (role == 2)
             {
                 Teacher nTeacher = new Teacher(Convert.ToInt32(dr["user_id"]));
-                nTeacher.delete(Convert.ToInt32(dr["user_id"]));
+                nTeacher.delete(user_id);
             }
             else if (role == 3)
             {
                 Student nStudent = new Student(Convert.ToInt32(dr["user_id"]));
-                nStudent.delete(Convert.ToInt32(dr["user_id"]));
+                nStudent.delete(user_id);
             }
             else if (role == 4)
             {
                 Parent nParent = new Parent(Convert.ToInt32(dr["user_id"]));
-                nParent.delete_Uid(Convert.ToInt32(dr["user_id"]));
+                nParent.delete_Uid(user_id);
             }
             for_role.connection.Close();
             //----------
