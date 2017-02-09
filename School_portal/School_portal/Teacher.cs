@@ -32,11 +32,13 @@ namespace School_portal
         }
         public new void delete(int user_id)
         {
+            delete_teacher.connection.Open();
             Groupp update_groupp_Tid = new Groupp();
             SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.teacher WHERE user_id LIKE '%" + user_id + "'", delete_teacher.connection);
             SqlDataReader dr = sqlCom.ExecuteReader();
             dr.Read();
             update_groupp_Tid.update_Tid(Convert.ToInt32(dr["teacher_id"]));
+            delete_teacher.connection.Close();
             //==========
             delete_teacher.connection.Open();
             string sql = string.Format("Delete from teacher where user_id = '{0}'", user_id);
@@ -44,7 +46,7 @@ namespace School_portal
             {
                 cmd.ExecuteNonQuery();
             }
-            
+            delete_teacher.connection.Close();
         }
     }
 }
