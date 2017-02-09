@@ -32,19 +32,21 @@ namespace School_portal
         }
         public new void delete(int user_id)
         {
+            delete_student.connection.Open();
             Parent parent = new Parent();
             SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.student WHERE user_id LIKE '%" + user_id + "'", delete_student.connection);
             SqlDataReader dr = sqlCom.ExecuteReader();
             dr.Read();
             parent.delete(Convert.ToInt32(dr["student_ticket_number"]));
-            //==========
             delete_student.connection.Close();
+            //==========
             delete_student.connection.Open();
             string sql = string.Format("Delete from student where user_id = '{0}'", user_id);
             using (SqlCommand cmd = new SqlCommand(sql, delete_student.connection))
             {
                 cmd.ExecuteNonQuery();
             }
+            delete_student.connection.Close();
         }
     }
 }
