@@ -9,7 +9,7 @@ namespace School_portal
     public class Student : Users
     {
         public int student_ticket_number { get; set; }
-        public int group_id { get; set; }
+        public int groupp_id { get; set; }
         public Student(int user_id)
         {
             this.user_id = user_id;
@@ -21,11 +21,11 @@ namespace School_portal
             //this.user_id = user_id;
             add_student.connection.Open();
             string sql = string.Format("Insert Into student" +
-                       "(user_id, group_id) Values(@user_id, @group_id)");
+                       "(user_id, groupp_id) Values(@user_id, @groupp_id)");
             using (SqlCommand cmd = new SqlCommand(sql, add_student.connection))
             {
                 cmd.Parameters.AddWithValue("@user_id", user_id);
-                cmd.Parameters.AddWithValue("@group_id", 1);
+                cmd.Parameters.AddWithValue("@groupp_id", 1);
                 cmd.ExecuteNonQuery();
             }
             add_student.connection.Close();
