@@ -67,6 +67,8 @@
         <asp:TextBox ID="TextBox10" runat="server" OnTextChanged="TextBox10_TextChanged"></asp:TextBox>
         <asp:Button ID="Button4" runat="server" Text="Удалить класс" OnClick="Button4_Click" />
     
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Расписание" />
+    
     </div>
     </form>
 </body>

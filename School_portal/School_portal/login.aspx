@@ -19,7 +19,7 @@
         <asp:Label ID="Label2" runat="server" Text="Пароль: "></asp:Label>
         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Войти" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Войти" style="height: 26px" />
         <asp:Button ID="Button2" runat="server" Text="Гость" />
         <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     </div>

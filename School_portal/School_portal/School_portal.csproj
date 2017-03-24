@@ -124,6 +124,7 @@
     <Content Include="Student.aspx" />
     <Content Include="Teacher.aspx" />
     <Content Include="testConnection.aspx" />
+    <Content Include="Timetable.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,13 @@
     </Compile>
     <Compile Include="testConnection.aspx.designer.cs">
       <DependentUpon>testConnection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Timetable.aspx.cs">
+      <DependentUpon>Timetable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Timetable.aspx.designer.cs">
+      <DependentUpon>Timetable.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users.cs" />
   </ItemGroup>
