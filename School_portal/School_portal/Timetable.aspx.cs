@@ -12,7 +12,7 @@ namespace School_portal
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string sName = "";
+            string sName = "", gText = "";
             ConnOpen tLoad = new ConnOpen();
             ConnOpen tLoadUse = new ConnOpen();
             if (Session["Value"] != null)
@@ -28,7 +28,9 @@ namespace School_portal
                     tLoad.connection.Open();
                     SqlCommand command_subject = new SqlCommand("SELECT * FROM dbo.subject", tLoad.connection);
                     SqlDataReader reader_subject = command_subject.ExecuteReader();
-                    while(reader_subject.Read())
+                    DropDownList1.Items.Clear();
+                    //Обнуляем количество итемов
+                    while (reader_subject.Read())
                     {
                         sName = reader_subject["subject_name"].ToString();
                         DropDownList1.Items.Add(new ListItem(sName, reader_subject["subject_id"].ToString()));
@@ -43,6 +45,8 @@ namespace School_portal
                     SqlCommand command_use;
                     SqlDataReader reader_use;
                     string F = "", I = "", O = "";
+                    DropDownList2.Items.Clear();
+                    //Обнуляем количество итемов
                     while (reader_teach.Read())
                     {
                         command_use = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + reader_teach["user_id"].ToString() + "'", tLoadUse.connection);
@@ -59,6 +63,18 @@ namespace School_portal
                     }
                     tLoad.connection.Close();
                     tLoadUse.connection.Close();
+                    //------------------------------------------------------
+                    tLoad.connection.Open();
+                    SqlCommand command_groupp = new SqlCommand("SELECT * FROM dbo.groupp", tLoad.connection);
+                    SqlDataReader reader_groupp = command_groupp.ExecuteReader();
+                    DropDownList3.Items.Clear();
+                    //Обнуляем количество итемов
+                    while(reader_groupp.Read())
+                    {
+                        gText = reader_groupp["groupp_kurs"].ToString() + " " + reader_groupp["groupp_name"].ToString();
+                        DropDownList3.Items.Add(new ListItem(gText, reader_groupp["groupp_id"].ToString()));
+                    }
+                    tLoad.connection.Close();
                 }
 
             }
