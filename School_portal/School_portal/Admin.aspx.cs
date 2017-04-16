@@ -43,6 +43,8 @@ namespace School_portal
                 SqlDataReader reader_use;
                 //Создал команду для таблицы dbo.users
                 string F = "", I = "", O = "";
+                DropDownList3.Items.Clear();
+                //Обнуляем количество итемов
                 while (reader_teach.Read())//По циклу читаем таблицу dbo.teacher до конца таблицы
                 {
                     command_use = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + reader_teach["user_id"].ToString() + "'", admLoadUse.connection);
