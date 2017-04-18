@@ -11,5 +11,6 @@ namespace School_portal
         public int subject_id { get; set; }
         public int teacher_id { get; set; }
         public int group_id { get; set; }
+
     }
 }
