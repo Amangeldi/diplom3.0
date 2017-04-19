@@ -75,6 +75,7 @@ namespace School_portal
                         DropDownList3.Items.Add(new ListItem(gText, reader_groupp["groupp_id"].ToString()));
                     }
                     tLoad.connection.Close();
+                    //------------------------------------------------------
                 }
 
             }
@@ -88,7 +89,8 @@ namespace School_portal
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            Timetable rasp = new Timetable();
+            rasp.add(Convert.ToInt32(DropDownList1.SelectedValue), Calendar1.SelectedDate.ToShortDateString(), Convert.ToInt32(DropDownList2.SelectedValue), Convert.ToInt32(DropDownList3.SelectedValue), DropDownList4.SelectedValue);
         }
     }
 }
