@@ -76,6 +76,13 @@ namespace School_portal
                     }
                     tLoad.connection.Close();
                     //------------------------------------------------------
+                    tLoad.connection.Open();
+                    string result = "";
+                    string today = DateTime.Now.ToShortDateString().ToString();
+                    
+                    SqlCommand command = new SqlCommand("SELECT * FROM dbo.timetable WHERE time ", tLoad.connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
                 }
 
             }
