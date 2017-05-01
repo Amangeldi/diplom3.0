@@ -29,7 +29,7 @@ namespace School_portal
             else if (RadioButton2.Checked == true)
             {
                 role = 2;
-                url = "Prep";
+                url = "Teacher";
             }
             else if (RadioButton3.Checked == true)
             {
