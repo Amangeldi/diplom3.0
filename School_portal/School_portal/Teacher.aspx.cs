@@ -11,7 +11,13 @@ namespace School_portal
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ConnOpen teachLoad = new ConnOpen();
+            if(Session["Value"] != null)
+            {
+                teachLoad.connection.Open();
 
+                teachLoad.connection.Close();
+            }
         }
     }
 }
