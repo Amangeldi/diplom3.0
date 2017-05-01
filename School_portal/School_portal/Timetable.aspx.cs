@@ -79,9 +79,25 @@ namespace School_portal
                     tLoad.connection.Open();
                     string result = "";
                     string today = DateTime.Now.ToShortDateString().ToString();
-                    
-                    SqlCommand command = new SqlCommand("SELECT * FROM dbo.timetable WHERE time ", tLoad.connection);
+                    Timetable deyOfWeek = new Timetable();
+                    DateTime monday = deyOfWeek.getMonday(DateTime.Now);
+                    DateTime sunday = deyOfWeek.getSunday(DateTime.Now);
+                    Label1.Text = sunday.ToString();
+                    SqlCommand command = new SqlCommand("SELECT * FROM dbo.timetable WHERE time BETWEEN '"+monday.ToShortDateString()+"' AND '"+sunday.ToShortDateString()+"' ORDER BY time ASC", tLoad.connection);
                     SqlDataReader reader = command.ExecuteReader();
+                    result += "<table> <tr><td>Дата и время</td><td>Предмет</td> <td>Преподаватель</td><td>Группа</td> </tr>";
+
+                    while (reader.Read())
+                    {
+                        result += "<tr> <td>" + reader["time"].ToString() + "</td>";
+                        result += "<td>" + reader["subject_id"].ToString() + "</td>";
+                        result += "<td>" + reader["teacher_id"].ToString() + "</td>";
+                        result += "<td>" + reader["groupp_id"].ToString() + "</td>";
+                        result += "</tr>";
+                    }
+                    result += "</ table >";
+                    Label1.Text = result;
+                    reader.Close();
 
                 }
 

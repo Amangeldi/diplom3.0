@@ -33,5 +33,22 @@ namespace School_portal
             }
             add_timetable.connection.Close();
         }
+            //-------
+        public DateTime getMonday(DateTime date)
+        {
+            while (date.DayOfWeek != System.DayOfWeek.Monday)
+            {
+                date = date.AddDays(-1);
+            }
+            return date;
+        }
+        public DateTime getSunday(DateTime date)
+        {
+            while (date.DayOfWeek != System.DayOfWeek.Sunday)
+            {
+                date = date.AddDays(1);
+            }
+            return date;
+        }
     }
 }
