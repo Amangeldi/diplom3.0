@@ -31,7 +31,7 @@
         <asp:Label ID="Label5" runat="server" Text="Примечание к оценке: "></asp:Label>
         <asp:TextBox ID="TextBox2" runat="server" Width="329px"></asp:TextBox>
         <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
-        <asp:Button ID="Button1" runat="server" Text="Добавить запись в журнал" />
+        <asp:Button ID="Button1" runat="server" Text="Добавить запись в журнал" OnClick="Button1_Click" />
     
     </div>
     </form>
