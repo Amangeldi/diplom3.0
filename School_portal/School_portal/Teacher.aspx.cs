@@ -114,14 +114,15 @@ namespace School_portal
             SqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
             {
-                DropDownList7.Items.Add(new ListItem(reader["time"].ToString(), reader["timetable_id"].ToString()));
+                DropDownList7.Items.Add(new ListItem(reader["time"].ToString(), reader["time"].ToString()));//тут какая-то подстава
             }
             hw.connection.Close();
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-
+            Homework hw = new Homework();
+            hw.add(Convert.ToInt32(DropDownList5.SelectedValue), Convert.ToInt32(DropDownList6.SelectedValue), uid, TextBox3.Text, DropDownList7.SelectedValue );
         }
     }
 }
