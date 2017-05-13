@@ -16,6 +16,9 @@
         <asp:Label ID="Label2" runat="server" Text="Выбрать студента: "></asp:Label>
         <asp:DropDownList ID="DropDownList2" runat="server">
         </asp:DropDownList>
+        <asp:Label ID="Label7" runat="server" Text="Предмет: "></asp:Label>
+        <asp:DropDownList ID="DropDownList4" runat="server">
+        </asp:DropDownList>
         <asp:Label ID="Label3" runat="server" Text="Отметка: "></asp:Label>
         <asp:DropDownList ID="DropDownList3" runat="server">
             <asp:ListItem Value="0">Н</asp:ListItem>
