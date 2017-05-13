@@ -36,6 +36,24 @@
         <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
         <asp:Button ID="Button1" runat="server" Text="Добавить запись в журнал" OnClick="Button1_Click" />
     
+        <asp:Panel ID="Panel1" runat="server">
+            <asp:Label ID="Label8" runat="server" Text="Домашнее задание"></asp:Label>
+            <br />
+            <asp:Label ID="Label9" runat="server" Text="Выбрать группу: "></asp:Label>
+            <asp:DropDownList ID="DropDownList5" runat="server">
+            </asp:DropDownList>
+            <asp:Label ID="Label10" runat="server" Text="Выбрать предмет: "></asp:Label>
+            <asp:DropDownList ID="DropDownList6" runat="server">
+            </asp:DropDownList>
+            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Выбрать дату и время" />
+            <asp:DropDownList ID="DropDownList7" runat="server">
+            </asp:DropDownList>
+            <asp:Label ID="Label11" runat="server" Text="Домашнее задание: "></asp:Label>
+            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+            <br />
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Задать домашнее задание" />
+        </asp:Panel>
+    
     </div>
     </form>
 </body>

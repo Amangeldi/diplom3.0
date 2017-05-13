@@ -32,6 +32,7 @@ namespace School_portal
                     {
                         gText = reader_groupp["groupp_kurs"].ToString() + " " + reader_groupp["groupp_name"].ToString();
                         DropDownList1.Items.Add(new ListItem(gText, reader_groupp["groupp_id"].ToString()));
+                        DropDownList5.Items.Add(new ListItem(gText, reader_groupp["groupp_id"].ToString()));
                         Label6.Text += reader_groupp["groupp_id"].ToString();
                     }
                 }
@@ -79,6 +80,7 @@ namespace School_portal
                     {
                         sName = reader_subject["subject_name"].ToString();
                         DropDownList4.Items.Add(new ListItem(sName, reader_subject["subject_id"].ToString()));
+                        DropDownList6.Items.Add(new ListItem(sName, reader_subject["subject_id"].ToString()));
                     }
                 }
                 teachLoad.connection.Close();
@@ -92,6 +94,34 @@ namespace School_portal
             grade.add(Convert.ToInt32(DropDownList1.SelectedValue), Convert.ToInt32(DropDownList2.SelectedValue), uid, Convert.ToInt32(DropDownList3.SelectedValue), TextBox1.Text, TextBox2.Text, Convert.ToInt32(DropDownList4.SelectedValue));
             // d/m/y ttt: 01 / 01 / 2017 23:59:59
             Label6.Text = DropDownList1.SelectedValue;
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            ConnOpen hw = new ConnOpen();
+            ConnOpen t = new ConnOpen();
+            hw.connection.Open();
+            t.connection.Open();
+            string today = DateTime.Now.ToShortDateString();
+            SqlCommand tCommand = new SqlCommand("SELECT * FROM dbo.teacher WHERE user_id LIKE '"+uid+"'", t.connection);
+            SqlDataReader tReader = tCommand.ExecuteReader();
+            string tid = "";
+            while (tReader.Read())
+            {
+                tid = tReader["teacher_id"].ToString();
+            }
+            SqlCommand command = new SqlCommand("SELECT * FROM dbo.timetable WHERE groupp_id LIKE '"+DropDownList5.SelectedValue +"' AND subject_id LIKE '"+ DropDownList6.SelectedValue+ "' AND teacher_id LIKE '"+tid+"' AND time > '" + today + "'  ORDER BY time ASC", hw.connection);
+            SqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                DropDownList7.Items.Add(new ListItem(reader["time"].ToString(), reader["timetable_id"].ToString()));
+            }
+            hw.connection.Close();
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
