@@ -11,7 +11,7 @@ namespace School_portal
     public partial class Parent1 : System.Web.UI.Page
     {
         string FIO = null, sUser_id = null, STN = null, sFIO = null;
-
+        int uId;
         protected void Button1_Click(object sender, EventArgs e)
         {
             ConnOpen journal = new ConnOpen();
@@ -31,6 +31,7 @@ namespace School_portal
             {
                 parentLoad.connection.Open();
                 int id = Convert.ToInt32(Session["Value"]);
+                uId = Convert.ToInt32(Session["Value"]);
                 Label1.Text = id.ToString();
                 SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", parentLoad.connection);
                 SqlDataReader dr = sqlCom.ExecuteReader();

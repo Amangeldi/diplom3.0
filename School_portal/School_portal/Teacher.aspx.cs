@@ -10,12 +10,12 @@ namespace School_portal
 {
     public partial class Teacher1 : System.Web.UI.Page
     {
-        int uid;
+        int uId;
         int flag = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             
-            uid = Convert.ToInt32(Session["Value"]);
+            uId = Convert.ToInt32(Session["Value"]);
             string sName = "", gText = "";
             ConnOpen teachLoad = new ConnOpen();
             ConnOpen teachLoadUse = new ConnOpen();
@@ -91,7 +91,7 @@ namespace School_portal
         protected void Button1_Click(object sender, EventArgs e)
         {
             Journal grade = new Journal();
-            grade.add(Convert.ToInt32(DropDownList1.SelectedValue), Convert.ToInt32(DropDownList2.SelectedValue), uid, Convert.ToInt32(DropDownList3.SelectedValue), TextBox1.Text, TextBox2.Text, Convert.ToInt32(DropDownList4.SelectedValue));
+            grade.add(Convert.ToInt32(DropDownList1.SelectedValue), Convert.ToInt32(DropDownList2.SelectedValue), uId, Convert.ToInt32(DropDownList3.SelectedValue), TextBox1.Text, TextBox2.Text, Convert.ToInt32(DropDownList4.SelectedValue));
             // d/m/y ttt: 01 / 01 / 2017 23:59:59
             Label6.Text = DropDownList1.SelectedValue;
         }
@@ -103,7 +103,7 @@ namespace School_portal
             hw.connection.Open();
             t.connection.Open();
             string today = DateTime.Now.ToShortDateString();
-            SqlCommand tCommand = new SqlCommand("SELECT * FROM dbo.teacher WHERE user_id LIKE '"+uid+"'", t.connection);
+            SqlCommand tCommand = new SqlCommand("SELECT * FROM dbo.teacher WHERE user_id LIKE '"+uId+"'", t.connection);
             SqlDataReader tReader = tCommand.ExecuteReader();
             string tid = "";
             while (tReader.Read())
@@ -122,7 +122,7 @@ namespace School_portal
         protected void Button3_Click(object sender, EventArgs e)
         {
             Homework hw = new Homework();
-            hw.add(Convert.ToInt32(DropDownList5.SelectedValue), Convert.ToInt32(DropDownList6.SelectedValue), uid, TextBox3.Text, DropDownList7.SelectedValue );
+            hw.add(Convert.ToInt32(DropDownList5.SelectedValue), Convert.ToInt32(DropDownList6.SelectedValue), uId, TextBox3.Text, DropDownList7.SelectedValue );
         }
     }
 }

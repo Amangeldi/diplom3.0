@@ -12,6 +12,7 @@ namespace School_portal
     {
 
         string FIO = null;
+        int uId;
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnOpen studLoad = new ConnOpen();
@@ -20,6 +21,7 @@ namespace School_portal
             {
                 studLoad.connection.Open();
                 int id = Convert.ToInt32(Session["Value"]);
+                uId = Convert.ToInt32(Session["Value"]);
                 Label1.Text = id.ToString();
                 SqlCommand sqlCom = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + id + "'", studLoad.connection);
                 SqlDataReader dr = sqlCom.ExecuteReader();
