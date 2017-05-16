@@ -11,6 +11,13 @@ namespace School_portal
     public partial class Parent1 : System.Web.UI.Page
     {
         string FIO = null, sUser_id = null, STN = null, sFIO = null;
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Session["Value"] = uId;
+            Server.Transfer("Message.aspx", true);
+        }
+
         int uId;
         protected void Button1_Click(object sender, EventArgs e)
         {

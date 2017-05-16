@@ -177,5 +177,11 @@ namespace School_portal
             Session["Value"] = 1;
             Server.Transfer("Timetable.aspx", true);
         }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Session["Value"] = uId;
+            Server.Transfer("Message.aspx", true);
+        }
     }
 }
