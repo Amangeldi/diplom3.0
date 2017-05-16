@@ -124,5 +124,11 @@ namespace School_portal
             Homework hw = new Homework();
             hw.add(Convert.ToInt32(DropDownList5.SelectedValue), Convert.ToInt32(DropDownList6.SelectedValue), uId, TextBox3.Text, DropDownList7.SelectedValue );
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Session["Value"] = uId;
+            Server.Transfer("Message.aspx", true);
+        }
     }
 }

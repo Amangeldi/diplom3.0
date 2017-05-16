@@ -16,6 +16,8 @@
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Расписаться в дневнике" />
     
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Написать сообщение" />
+    
     </div>
     </form>
 </body>

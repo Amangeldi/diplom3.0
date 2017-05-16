@@ -52,6 +52,7 @@
             <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
             <br />
             <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Задать домашнее задание" />
+            <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Написать сообщение" />
         </asp:Panel>
     
     </div>

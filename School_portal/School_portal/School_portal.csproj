@@ -120,6 +120,7 @@
     <Content Include="Admin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="login.aspx" />
+    <Content Include="Message.aspx" />
     <Content Include="Parent.aspx" />
     <Content Include="Student.aspx" />
     <Content Include="Teacher.aspx" />
@@ -150,6 +151,16 @@
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Message.aspx.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Message.aspx.designer.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Message.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Parent.aspx.cs">
       <DependentUpon>Parent.aspx</DependentUpon>

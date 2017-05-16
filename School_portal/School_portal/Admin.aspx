@@ -69,6 +69,8 @@
     
         <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Расписание" />
     
+        <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Написать сообщение" />
+    
     </div>
     </form>
 </body>

@@ -89,5 +89,11 @@ namespace School_portal
                 studLoad.connection.Close();
             }
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Session["Value"] = uId;
+            Server.Transfer("Message.aspx", true);
+        }
     }
 }
