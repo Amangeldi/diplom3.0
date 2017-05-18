@@ -153,4 +153,8 @@ namespace School_portal
             return test;
         }
     }
+
+    public class Class1
+    {
+    }
 }
