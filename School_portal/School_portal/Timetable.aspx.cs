@@ -16,6 +16,9 @@ namespace School_portal
         {
             string sName = "", gText = "";
             ConnOpen tLoad = new ConnOpen();
+            ConnOpen tLoadTe = new ConnOpen();
+            ConnOpen tLoadGr = new ConnOpen();
+            ConnOpen tLoadSu = new ConnOpen();
             ConnOpen tLoadUse = new ConnOpen();
             if (Session["Value"] != null)
             {
@@ -88,28 +91,70 @@ namespace School_portal
                     tLoad.connection.Close();
                     //------------------------------------------------------
                     tLoad.connection.Open();
+                    tLoadGr.connection.Open();
+                    tLoadSu.connection.Open();
+                    tLoadTe.connection.Open();
+                    tLoadUse.connection.Open();
                     string result = "";
                     string today = DateTime.Now.ToShortDateString().ToString();
                     Timetable deyOfWeek = new Timetable();
                     DateTime monday = deyOfWeek.getMonday(DateTime.Now);
                     DateTime sunday = deyOfWeek.getSunday(DateTime.Now);
                     Label1.Text = sunday.ToString();
+                    int subject, teacher, teacherUid, groupp;
+                    string tSubject = "", tTeacher = "", tGroupp = "";
                     SqlCommand command = new SqlCommand("SELECT * FROM dbo.timetable WHERE time BETWEEN '"+monday.ToShortDateString()+"' AND '"+sunday.ToShortDateString()+"' ORDER BY time ASC", tLoad.connection);
+                    SqlCommand command_gr;
+                    SqlCommand command_su;
+                    SqlCommand command_te;
+                    SqlCommand command_teach_ft;
                     SqlDataReader reader = command.ExecuteReader();
                     result += "<table> <tr><td>Дата и время</td><td>Предмет</td> <td>Преподаватель</td><td>Группа</td> </tr>";
-
                     while (reader.Read())
                     {
+                        subject = Convert.ToInt32(reader["subject_id"]);
+                        teacher = Convert.ToInt32(reader["teacher_id"]);
+                        groupp = Convert.ToInt32(reader["groupp_id"]);
+                        command_gr = new SqlCommand("SELECT * FROM dbo.groupp WHERE groupp_id LIKE '%" + groupp.ToString() + "'",tLoadGr.connection);
+                        SqlDataReader reader_command_gr = command_gr.ExecuteReader();
+                        while(reader_command_gr.Read())
+                        {
+                            tGroupp = reader_command_gr["groupp_kurs"].ToString()+" "+reader_command_gr["groupp_name"].ToString();
+                        }
+                        command_su = new SqlCommand("SELECT * FROM dbo.subject WHERE subject_id LIKE '%"+subject+"'", tLoadSu.connection);
+                        SqlDataReader reader_command_su = command_su.ExecuteReader();
+                        while(reader_command_su.Read())
+                        {
+                            tSubject = reader_command_su["subject_name"].ToString();
+                        }
+                        command_te = new SqlCommand("SELECT * FROM dbo.teacher WHERE teacher_id LIKE '%" + teacher + "'", tLoadTe.connection);
+                        SqlDataReader reader_command_te = command_te.ExecuteReader();
+                        while(reader_command_te.Read())
+                        {
+                            teacherUid = Convert.ToInt32(reader_command_te["user_id"]);
+                            command_teach_ft = new SqlCommand("SELECT * FROM users WHERE user_id LIKE '%" + teacherUid.ToString() + "'", tLoadUse.connection);
+                            SqlDataReader reader_teach_ft = command_teach_ft.ExecuteReader();
+                            while (reader_teach_ft.Read())
+                            {
+                                tTeacher = reader_teach_ft["familija"].ToString() + " " + reader_teach_ft["imja"].ToString() + " " + reader_teach_ft["otchestvo"].ToString();
+                            }
+                        }
+                        
                         result += "<tr> <td>" + reader["time"].ToString() + "</td>";
-                        result += "<td>" + reader["subject_id"].ToString() + "</td>";
-                        result += "<td>" + reader["teacher_id"].ToString() + "</td>";
-                        result += "<td>" + reader["groupp_id"].ToString() + "</td>";
+                        result += "<td>" + tSubject + "</td>";
+                        result += "<td>" + tTeacher + "</td>";
+                        result += "<td>" + tGroupp + "</td>";
                         result += "</tr>";
                     }
                     result += "</ table >";
                     Label1.Text = result;
                     reader.Close();
                     flag = 1;
+                    tLoad.connection.Close();
+                    tLoadGr.connection.Close();
+                    tLoadSu.connection.Close();
+                    tLoadTe.connection.Close();
+                    tLoadUse.connection.Close();
                 }
 
             }
