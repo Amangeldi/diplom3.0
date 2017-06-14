@@ -16,6 +16,8 @@ namespace School_portal
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnOpen studLoad = new ConnOpen();
+            ConnOpen studLoadSid = new ConnOpen();
+            ConnOpen studLoadTuid = new ConnOpen();
             ConnOpen studLoadUse = new ConnOpen();
             if(Session["Value"] != null)
             {
@@ -71,13 +73,32 @@ namespace School_portal
                 studLoad.connection.Close();
                 //----------
                 studLoad.connection.Open();
+                studLoadSid.connection.Open();
+                studLoadTuid.connection.Open();
                 string result_hw = "";
                 string today = DateTime.Now.ToShortDateString();
                 SqlCommand hw_command = new SqlCommand("SELECT * FROM dbo.homework WHERE groupp_id LIKE '%" + groupp_id + "' AND time > '"+today+ "'  ORDER BY time ASC", studLoad.connection);
                 SqlDataReader hw_reader = hw_command.ExecuteReader();
+                SqlCommand command_sid;
+                SqlCommand command_tuid;
                 result_hw += "<table> <tr><td>Предмет</td><td>Преподаватель</td> <td>Домашнее задание</td><td>Время занятия</td></tr>";
+                string sid, tuid;
                 while(hw_reader.Read())
                 {
+                    sid = hw_reader["subject_id"].ToString();
+                    tuid = hw_reader["teacher_user_id"].ToString();
+                    command_sid = new SqlCommand("SELECT * FROM dbo.subject WHERE subject_id LIKE '%" +sid+"'");
+                    command_tuid = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + tuid + "'");
+                    SqlDataReader reader_command_sid = command_sid.ExecuteReader();
+                    while(reader_command_sid.Read())
+                    {
+                        sid = reader_command_sid["subject_name"].ToString();
+                    }
+                    SqlDataReader reader_command_tuid = command_tuid.ExecuteReader();
+                    while (reader_command_tuid.Read())
+                    {
+                        tuid = reader_command_tuid["familija"].ToString() + " "+ reader_command_tuid["imja"].ToString() + " "+ reader_command_tuid["otchestvo"].ToString();
+                    }
                     result_hw += " <td>" + hw_reader["subject_id"].ToString() + "</td>";
                     result_hw += " <td>" + hw_reader["teacher_user_id"].ToString() + "</td>";
                     result_hw += " <td>" + hw_reader["homework_text"].ToString() + "</td>";
@@ -87,6 +108,8 @@ namespace School_portal
                 result_hw += "</ table >";
                 Label3.Text = "Домашнее задание, для вашей группы: " +result_hw;
                 studLoad.connection.Close();
+                studLoadSid.connection.Close();
+                studLoadTuid.connection.Close();
             }
         }
 
