@@ -16,6 +16,7 @@ namespace School_portal
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnOpen studLoad = new ConnOpen();
+            ConnOpen studLoadTe = new ConnOpen();
             ConnOpen studLoadSid = new ConnOpen();
             ConnOpen studLoadTuid = new ConnOpen();
             ConnOpen studLoadUse = new ConnOpen();
@@ -34,6 +35,7 @@ namespace School_portal
                 //----------
                 studLoad.connection.Open();
                 studLoadUse.connection.Open();
+                studLoadTe.connection.Open();
                 string result = "";
                 SqlCommand command_use = new SqlCommand("SELECT * FROM dbo.student WHERE user_id LIKE '%"+ id.ToString()+"'" , studLoadUse.connection);
                 string studId = "";
@@ -46,10 +48,15 @@ namespace School_portal
                     groupp_id = reader_use["groupp_id"].ToString();
                 }
                 studLoadUse.connection.Close();
+                //-
+                studLoadUse.connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM dbo.journal WHERE student_ticket_number LIKE '%"+studId+"'", studLoad.connection);
                 SqlDataReader reader = command.ExecuteReader();
                 result += "<table> <tr><td>Предмет</td><td>Преподаватель</td> <td>Оценка</td><td>Время выставления оценки</td><td>Время проведение работ</td><td>Комментарий к оценке</td> </tr>";
-                while(reader.Read())
+                SqlCommand command_te;
+                int teacher, teacherUid;
+                string tTeacher = "";
+                while (reader.Read())
                 {
                     if(reader["grade"].ToString() =="0")
                     {
@@ -59,18 +66,37 @@ namespace School_portal
                     {
                         grade = reader["grade"].ToString();
                     }
+
+                    teacher = Convert.ToInt32(reader["teacher_user_id"]);
+                    command_te = new SqlCommand("SELECT * FROM dbo.teacher WHERE teacher_id LIKE '%" + teacher + "'", studLoadTe.connection);
+                    SqlDataReader reader_command_te = command_te.ExecuteReader();
+                    SqlCommand command_teach_ft;
+                    while (reader_command_te.Read())
+                    {
+                        teacherUid = Convert.ToInt32(reader_command_te["user_id"]);
+                        command_teach_ft = new SqlCommand("SELECT * FROM users WHERE user_id LIKE '%" + teacherUid.ToString() + "'", studLoadUse.connection);
+                        SqlDataReader reader_teach_ft = command_teach_ft.ExecuteReader();
+                        while (reader_teach_ft.Read())
+                        {
+                            tTeacher = reader_teach_ft["familija"].ToString() + " " + reader_teach_ft["imja"].ToString() + " " + reader_teach_ft["otchestvo"].ToString();
+                        }
+                        reader_teach_ft.Close();
+                    }
                     result += "<tr> <td>" + reader["subject_id"].ToString() + "</td>";
-                    result += " <td>" + reader["teacher_user_id"].ToString() + "</td>";
+                    result += " <td>" + tTeacher + "</td>";
                     result += " <td>" + grade + "</td>";
                     result += " <td>" + reader["date_a"].ToString() + "</td>";
                     result += " <td>" + reader["date_b"].ToString() + "</td>";
                     result += " <td>" + reader["note"].ToString() + "</td>";
                     result += "</tr>";
+                    reader_command_te.Close();
                 }
                 result += "</ table >";
                 Label2.Text = "Оценки ученика:" + result;
                 reader.Close();
                 studLoad.connection.Close();
+                studLoadUse.connection.Close();
+                studLoadTe.connection.Close();
                 //----------
                 studLoad.connection.Open();
                 studLoadSid.connection.Open();
@@ -87,8 +113,8 @@ namespace School_portal
                 {
                     sid = hw_reader["subject_id"].ToString();
                     tuid = hw_reader["teacher_user_id"].ToString();
-                    command_sid = new SqlCommand("SELECT * FROM dbo.subject WHERE subject_id LIKE '%" +sid+"'");
-                    command_tuid = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + tuid + "'");
+                    command_sid = new SqlCommand("SELECT * FROM dbo.subject WHERE subject_id LIKE '%" +sid+"'", studLoadSid.connection);
+                    command_tuid = new SqlCommand("SELECT * FROM dbo.users WHERE user_id LIKE '%" + tuid + "'", studLoadTuid.connection);
                     SqlDataReader reader_command_sid = command_sid.ExecuteReader();
                     while(reader_command_sid.Read())
                     {
@@ -99,8 +125,8 @@ namespace School_portal
                     {
                         tuid = reader_command_tuid["familija"].ToString() + " "+ reader_command_tuid["imja"].ToString() + " "+ reader_command_tuid["otchestvo"].ToString();
                     }
-                    result_hw += " <td>" + hw_reader["subject_id"].ToString() + "</td>";
-                    result_hw += " <td>" + hw_reader["teacher_user_id"].ToString() + "</td>";
+                    result_hw += " <td>" + sid + "</td>";
+                    result_hw += " <td>" + tuid + "</td>";
                     result_hw += " <td>" + hw_reader["homework_text"].ToString() + "</td>";
                     result_hw += " <td>" + hw_reader["time"].ToString() + "</td>";
                     result_hw += "</tr>";

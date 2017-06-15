@@ -138,6 +138,7 @@ namespace School_portal
                             {
                                 tTeacher = reader_teach_ft["familija"].ToString() + " " + reader_teach_ft["imja"].ToString() + " " + reader_teach_ft["otchestvo"].ToString();
                             }
+                            reader_teach_ft.Close();
                         }
                         
                         result += "<tr> <td>" + reader["time"].ToString() + "</td>";
@@ -145,6 +146,9 @@ namespace School_portal
                         result += "<td>" + tTeacher + "</td>";
                         result += "<td>" + tGroupp + "</td>";
                         result += "</tr>";
+                        reader_command_gr.Close();
+                        reader_command_su.Close();
+                        reader_command_te.Close();
                     }
                     result += "</ table >";
                     Label1.Text = result;
